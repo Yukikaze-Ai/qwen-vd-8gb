@@ -69,6 +69,13 @@ The 0.65-point CER gap is not a regression. Four sentences moved and they split 
 variant lost or gained a sentence-initial particle the recogniser had previously caught or missed, two where the
 uncompiled one did. Leading interjections are the recogniser's weak spot, not the audio's.
 
+
+## A controlled run
+
+Twenty renders of one sentence in a single process, GPU utilisation sampled before each: median RTF **0.80**,
+P10 0.80, P90 0.83, **0 of 20 above 1.0**, utilisation 18-43%. The spread that reached 1.19 came from renders where
+something else was using the card; on an otherwise idle machine this configuration is stable.
+
 ## Cost
 
 The first render in a process pays 57–84 s of compilation. A service must gate readiness on a completed synthesis,
