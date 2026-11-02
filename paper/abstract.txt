@@ -1,0 +1,12 @@
+Most text-to-speech models copy a voice from a reference clip; fewer can invent one from a written description.
+Qwen3-TTS VoiceDesign does the second, and that capability is the reason to consider it, but on a consumer card it
+ran at RTF 1.41 -- slower than playback, so unfit for conversation. We report three settings that bring it to
+RTF 0.78 on four-second utterances and 0.92 on seven-second ones, with five different descriptions, on a single
+GeForce RTX 3060 Ti using Hugging Face Transformers and no serving stack. Profiling first put 99% of a render in the
+autoregressive loop and 1% in the vocoder, so the work is inside the loop: the five-layer code predictor, whose
+sequence length changes every frame, and the 1.7B talker's inner transformer, which can be compiled where its
+wrapper cannot. The decisive parameter is one nobody sets by default -- torch._dynamo.config.recompile_limit is 8,
+exhausted inside the first utterance, after which compilation silently stops applying. We also report that these
+gains are not bounded: later runs of the same recipe measured up to RTF 1.19 depending on what else used the card.
+Costs are 100-250 s of compilation on the first render, peak 4.07 GiB, and no measurable change in intelligibility
+or predicted naturalness over 20 sentences.
