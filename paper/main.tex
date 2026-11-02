@@ -17,7 +17,8 @@ Qwen3-TTS VoiceDesign at RTF 0.98 on One 8\,GB Consumer GPU}
 \begin{abstract}
 Most text-to-speech models can copy a voice from a reference clip; fewer can invent one from a written description.
 Qwen3-TTS VoiceDesign does the second, and that capability is the reason to consider it, but on a consumer card it
-ran at RTF~1.41 -- slower than playback, so unfit for conversation. We report two settings that bring it to
+ran at RTF~1.41 (synthesis seconds per audio second; below one is required for streaming) -- slower than
+playback, so unfit for conversation. We report two settings that bring it to
 RTF~0.78 with five different descriptions on a single GeForce RTX 3060\,Ti, using Hugging Face Transformers and no
 serving stack. The work is not on the 1.7B talker but on the five-layer code predictor that emits the residual
 codebooks: about fifteen short forwards per audio frame, each dominated by kernel launch rather than arithmetic.

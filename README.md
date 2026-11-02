@@ -29,6 +29,13 @@ only configuration sat at 0.97–1.02 and the two-compilation configuration at 0
 Profiling explains where it goes: 99% of a render is in the autoregressive loop, 1% in the vocoder. Compiling the
 vocoder would be pointless; compiling both model halves inside the loop is not.
 
+## A note on the convention
+
+RTF here is **synthesis seconds per audio second**, so lower is better and below 1.0 is what streaming requires.
+Some projects report the reciprocal (audio seconds per wall second), where 1.83 means the same thing as 0.55 here.
+Both are the same measurement; if you compare against a table that says "RTF > 1 is faster than real time", invert
+before comparing.
+
 ## The two settings
 
 ```python
